@@ -153,7 +153,7 @@ async def callback_handler(event):
         user.hapusAkun()
 
         await event.edit('Akun Berhasil Dihapus. Riwayat dikosongkan!')
-        asyncio.sleep(2)
+        await asyncio.sleep(2)
         await home_handler(event, True)
 
     # Fungsi Logging
