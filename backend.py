@@ -133,3 +133,9 @@ class User:
 
         tulis_file(data)
         addLog(self.username, 'Keluar', uang, total_setelah_dikurangi)
+
+    def hapusAkun(self):
+        data = baca_file()
+        data['user'].pop(self.username)
+
+        tulis_file(data)

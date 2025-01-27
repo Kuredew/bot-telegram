@@ -40,10 +40,10 @@ async def callback_handler(event):
 
     userData = backend.User(username)
     if event.data == b'keuangan':
-        await event.edit(f'Keuangan Digital by @zeanetstd\n\n<code>Pemasukan   : {userData.totalPemasukan()}\nPengeluaran : {userData.totalPengeluaran()}\nTotal Uang  : {userData.totalUang()}</code>\n\nPilih Fungsi Dibawah Ini.', parse_mode='HTML', buttons=[
+        await event.edit(f'<b>Keuangan Digital V1.0-ALPHA</b>\nby @zeanetstd\n\n<code>Pemasukan   : {userData.totalPemasukan()}\nPengeluaran : {userData.totalPengeluaran()}\nTotal Uang  : {userData.totalUang()}</code>\n\nPilih Fungsi Dibawah Ini.', parse_mode='HTML', buttons=[
             [Button.inline('Tambah Uang', 'tambah'),
             Button.inline('Ambil Uang', 'ambil')],
-            [Button.inline('Hapus Akun'),
+            [Button.inline('Hapus Akun', 'hapusakun'),
              Button.inline('Riwayat', 'log')],
             [Button.inline('Kembali', 'home')]
         ])
@@ -141,7 +141,21 @@ async def callback_handler(event):
             await asyncio.sleep(2)
             await home_handler(event, edit=False)
 
-    
+
+    # Fungsi Hapus Akun
+    if event.data == b'hapusakun':
+        await event.edit('Apakah Kamu Yakin Ingin Menghapus Akun?', buttons=[
+            [Button.inline('Hapus', 'hapusakun-yakin')],
+            [Button.inline('Batal', 'home')]
+        ])
+    if event.data == b'hapusakun-yakin':
+        user = backend.User(username)
+        user.hapusAkun()
+
+        await event.edit('Akun Berhasil Dihapus. Riwayat dikosongkan!')
+        asyncio.sleep(2)
+        await home_handler(event, True)
+
     # Fungsi Logging
     if event.data == b'log':
         user = backend.User(username)
